@@ -1,0 +1,113 @@
+/*
+ * Andrew Gates
+ * 5/20/2015
+ * TCES 203
+ * Assignment #6
+ *
+ * This program contains the functions to be used in conjunction with main.cpp, Node.cpp, Node.h, List.cpp, List.h,
+ * Queue.cpp, Stack.cpp and Stack.h to create objects of type Queue and containing the functions to enqueue, dequeue,
+ * and to print the queue.
+ */
+
+#ifndef QUEUE_H_
+#define QUEUE_H_
+
+#include "List.h"
+
+template <class T>
+class Queue : public List<T>
+{
+	public:
+		Queue();//Default constructor.
+		void enQueue(Node<T>*);//Function prototype to enqueue a node to the queue.
+		void deQueue();//Function prototype to dequeue a node from the queue.
+		void printQueue();//Function prototype to print the queue.
+		friend ostream &operator<<(ostream &, Queue<string>*);//Function prototype to overload <<.
+};
+
+//Default constructor.
+template <class T>
+Queue<T>::Queue()
+{
+	List<T>::listFront = NULL;
+	List<T>::listBack = NULL;
+	List<T>::listSize = 0;
+}
+
+//Function definition to add enqueue node to the queue.
+template <class T>
+void Queue<T>::enQueue(Node<T>* newNode)
+{
+	this->addLast(newNode);
+}
+
+//Function definition to dequeue a node from the queue.
+template <class T>
+void Queue<T>::deQueue()
+{
+	int test = this->isEmpty();
+	string errorMessage = "ERROR: deQueue called, The list is empty!";
+
+	if(test == 1)
+	{
+		throw errorMessage;
+	}
+
+	this->removeFirst();
+}
+
+//Function definition to print the queue.
+template <class T>
+void Queue<T>::printQueue()
+{
+	Node<string>* tempNode = this->listFront;
+	int i;
+
+	//If list is empty.
+	if (tempNode == NULL)
+	{
+		cout << "The queue is empty" << endl;
+		return;
+	}
+
+	if (tempNode != NULL)
+	{
+		//Print first node.
+		cout << "Front -> " << tempNode->getNodeName();
+
+		//Print more nodes if there is more than 1.
+		if ((this->getListSize()) > 1)
+		{
+			for (i = 1; i < this->getListSize(); i++)
+			{
+				tempNode = tempNode->getNodeNext();
+				if (tempNode->getNodeNext() == NULL)
+				{
+					cout << " -><- " << tempNode->getNodeName() << " <- Back" << endl;
+					break;
+				}
+				else
+				{
+					cout << " -><- " << tempNode->getNodeName();
+				}
+			}
+		}
+		else
+		{
+			cout << " <- Back" << endl;
+		}
+	}
+
+		tempNode = NULL;
+}
+
+//Function definition to overload <<.
+ostream &operator<<(ostream &s, Queue<string>* myQueue)
+{
+	myQueue->printQueue();
+
+	return s;
+}
+
+
+#endif /* QUEUE_H_ */

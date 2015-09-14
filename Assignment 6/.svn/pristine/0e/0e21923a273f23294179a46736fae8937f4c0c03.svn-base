@@ -1,0 +1,64 @@
+/*
+ * Node.cpp
+ *
+ *  Created on: May 18, 2015
+ *      Author: ag8833
+ */
+
+#include "Node.h"
+
+Node::Node()
+{
+	nodeName = '0';
+	nodeNext = NULL;
+	nodePrev = NULL;
+}
+
+Node::Node(string name)
+{
+	if (name.length() < 3)
+	{
+		cout << "The name is not valid please enter a new name" << endl;
+		return;
+	}
+
+	nodeName = name;
+	nodeNext = NULL;
+	nodePrev = NULL;
+}
+
+string Node::getNodeName()
+{
+	return nodeName;
+}
+
+Node* Node::getNodeNext()
+{
+	return nodeNext;
+}
+
+Node* Node::getNodePrev()
+{
+	return nodePrev;
+}
+
+void Node::setNodeName(string newName)
+{
+	if (newName.length() < 3)
+	{
+		cout << "The name is not valid please enter a new name" << endl;
+		return;
+	}
+
+	nodeName = newName;
+}
+
+void Node::setNodeNext(Node* newNode)
+{
+	nodeNext = newNode;
+}
+
+void Node::setNodePrev(Node* newNode)
+{
+	nodePrev = newNode;
+}

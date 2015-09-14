@@ -1,0 +1,35 @@
+/*
+ * List.h
+ *
+ *  Created on: May 18, 2015
+ *      Author: ag8833
+ */
+
+#ifndef LIST_H_
+#define LIST_H_
+
+#include "Node.h"
+
+class List : public Node
+{
+	protected:
+		Node* listFront;
+		Node* listBack;
+		int listSize;
+	public:
+		List();
+		//List(string);
+		//~List();
+		void addFirst(Node*);
+		void addLast(Node*);
+		void removeFirst();
+		void removeLast();
+		int getListSize();
+		int isEmpty();
+		Node* getListFront();
+		Node* getListBack();
+		void printList();
+		friend ostream &operator<<(ostream &,List*);
+};
+
+#endif /* LIST_H_ */

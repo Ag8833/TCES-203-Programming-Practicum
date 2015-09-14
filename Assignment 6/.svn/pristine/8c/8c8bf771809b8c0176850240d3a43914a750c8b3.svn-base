@@ -1,0 +1,175 @@
+/*
+ * List.cpp
+ *
+ *  Created on: May 18, 2015
+ *      Author: ag8833
+ */
+
+#include "List.h"
+
+List::List()
+{
+	listFront = NULL;
+	listBack = NULL;
+	listSize = 0;
+}
+
+//I only create one list and it's a blank list so this is unneeded.
+//List::List(string name)
+//{
+//
+//}
+
+//No dynamic memory allocation in the List class itself, unneeded destructor.
+List::~List()
+{
+
+}
+
+void List::addFirst(Node* newNode)
+{
+	if (listFront == NULL)
+	{
+		listFront = newNode;
+		listBack = newNode;
+	}
+	else
+	{
+		newNode->setNodeNext(listFront);
+		listFront->setNodePrev(newNode);
+		listFront = newNode;
+	}
+	listSize++;
+}
+
+void List::addLast(Node* newNode)
+{
+	if (listBack == NULL)
+	{
+		listFront = newNode;
+		listBack = newNode;
+	}
+	else
+	{
+		(this->getListBack())->setNodeNext(newNode);
+		newNode->setNodePrev(listBack);
+		listBack = newNode;
+		newNode->setNodeNext(NULL);
+	}
+	listSize++;
+}
+
+void List::removeFirst()
+{
+	if (listFront == NULL)
+	{
+		cout << "The list is empty!";
+		return;
+	}
+	else if ((listFront->getNodeNext()) == NULL)
+	{
+		listFront = NULL;
+		listBack = NULL;
+	}
+	else
+	{
+		(listFront->getNodeNext())->setNodePrev(NULL);
+		listFront = (listFront->getNodeNext());
+	}
+	listSize--;
+}
+
+void List::removeLast()
+{
+	if (listBack == NULL)
+	{
+		cout << "The list is empty!";
+		return;
+	}
+	else if ((listBack->getNodePrev()) == NULL)
+	{
+		listBack = NULL;
+		listFront = NULL;
+	}
+	else
+	{
+		(listBack->getNodePrev())->setNodeNext(NULL);
+		listBack = (listBack->getNodePrev());
+	}
+	listSize--;
+}
+
+int List::getListSize()
+{
+	return listSize;
+}
+
+int List::isEmpty()
+{
+	if (listFront == NULL || listBack == NULL)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+Node* List::getListFront()
+{
+	return listFront;
+}
+
+Node* List::getListBack()
+{
+	return listBack;
+}
+
+ostream &operator<<(ostream &s, List* myList)
+{
+	myList->printList();
+
+	return s;
+}
+
+void List::printList()
+{
+	Node* tempNode = this->listFront;
+	int i;
+
+	if (tempNode == NULL)
+	{
+		cout << "The list is empty" << endl;
+		return;
+	}
+
+	if (tempNode != NULL)
+	{
+		cout << "NULL -> " << tempNode->getNodeName();
+
+		if ((this->getListSize()) > 1)
+		{
+			for (i = 1; i < this->getListSize(); i++)
+			{
+				tempNode = tempNode->getNodeNext();
+				if (tempNode->getNodeNext() == NULL)
+				{
+					cout << " -><- " << tempNode->getNodeName() << " <- NULL" << endl;
+					break;
+				}
+				else
+				{
+					cout << " -><- " << tempNode->getNodeName();
+				}
+			}
+		}
+		else
+		{
+			cout << " <- NULL" << endl;
+		}
+	}
+
+	tempNode = NULL;
+}
+

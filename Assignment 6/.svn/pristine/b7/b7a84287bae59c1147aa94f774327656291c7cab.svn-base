@@ -1,0 +1,290 @@
+/*
+ * main.cpp
+ *
+ *  Created on: May 18, 2015
+ *      Author: ag8833
+ */
+
+#include "Node.h"
+#include "List.h"
+#include "Stack.h"
+#include "Queue.h"
+
+#define MAXSIZE 4
+
+void nodeTesting();
+
+void listTesting();
+Node* listCreate(List*);
+void listProcess(List*);
+void listDelete(List*, Node*);
+
+void stackTesting();
+Node* stackCreate(Stack*);
+void stackProcess(Stack*);
+void stackDelete(Stack*, Node*);
+
+void queueTesting();
+Node* queueCreate(Queue*);
+void queueProcess(Queue*);
+void queueDelete(Queue*, Node*);
+
+int main()
+{
+	//Node class testing.
+	cout << "----------------------------------" << endl;
+	cout << "NODE TESTING" << endl << endl;
+	nodeTesting();
+
+	//List class testing.
+	cout << "----------------------------------" << endl;
+	cout << "LIST TESTING" << endl << endl;
+	listTesting();
+
+	//Stack class testing.
+	cout << endl << "----------------------------------" << endl;
+	cout << "STACK TESTING" << endl << endl;
+	stackTesting();
+
+	//Queue class testing.
+	cout << endl << "----------------------------------" << endl;
+	cout << "QUEUE TESTING" << endl << endl;
+	queueTesting();
+
+	cin.get();
+	cin.get();
+	return 0;
+}
+
+void nodeTesting()
+{
+	//Allocating my first node for testing using overloaded constructor.
+	Node* firstNode = new Node("Andrew");
+
+	cout << "First node's name is: " << firstNode->getNodeName() << endl;
+	cout << "First node's next is: " << firstNode->getNodeNext() << endl;
+	cout << "First node's previous is: " << firstNode->getNodePrev() << endl;
+
+	//Allocating my second node for testing using default constructor.
+	Node* secondNode = new Node;
+	secondNode->setNodeName("Bob");
+
+	cout << "Second node's name is: " << secondNode->getNodeName() << endl;
+	cout << "Second node's next is: " << secondNode->getNodeNext() << endl;
+	cout << "Second node's previous is: " << secondNode->getNodePrev() << endl;
+
+	//Linking the first node to second and the second node to the first.
+	//Andrew -> Bob and Andrew <- Bob
+	firstNode->setNodeNext(secondNode);
+	secondNode->setNodePrev(firstNode);
+	cout << endl << "After linking first node to second and second to first -" << endl;
+	cout << "First node's next is: " << (firstNode->getNodeNext())->getNodeName() << endl;
+	cout << "Second node's previous is: " << (secondNode->getNodePrev())->getNodeName() << endl << endl;
+
+	//Deleting my allocated nodes.
+	delete firstNode;
+	delete secondNode;
+}
+
+void listTesting()
+{
+	List* myList = new List();
+	Node* nodeArray = listCreate(myList);
+	cout << "List size is: " << myList->getListSize() << endl << endl;
+
+	//Error with 1 node left in list.
+
+	listProcess(myList);
+
+	//Deleting my allocated nodes and list.
+	listDelete(myList, nodeArray);
+}
+
+Node* listCreate(List* myList)
+{
+	//Allocating my 4 nodes for testing.
+	Node* nodeArray = new Node[MAXSIZE];
+	nodeArray[0].setNodeName("Andrew");
+	nodeArray[1].setNodeName("Bob");
+	nodeArray[2].setNodeName("Tom");
+	nodeArray[3].setNodeName("Ron");
+
+	//Assigning my 4 nodes in random order.
+	myList->addFirst(&nodeArray[0]);
+	myList->addLast(&nodeArray[1]);
+	myList->addLast(&nodeArray[2]);
+	myList->addFirst(&nodeArray[3]);
+
+	return nodeArray;
+}
+
+void listProcess(List* myList)
+{
+	//Printing the list after adding my 4 nodes in a random order.
+	//listFront -> Ron -> Andrew -> Bob -> Tom <- listBack
+	cout << myList;
+
+	//Removing the first node and then reprinting the list.
+	//listFront -> Andrew -> Bob -> Tom <- listBack
+	myList->removeFirst();
+	cout << endl <<"After removing the first node the list is - " << endl ;
+	cout << myList;
+
+	//Removing the last node and then reprinting the list.
+	//listFront -> Andrew -> Bob <- listBack
+	myList->removeLast();
+	cout << endl << "After removing the last node the list is - " << endl;
+	cout << myList;
+
+	//Removing the first node and then reprinting the list.
+	//listFront -> Andrew <- listBack
+	myList->removeLast();
+	cout << endl << "After removing the first node the list is - " << endl;
+	cout << myList;
+
+	//Removing the remaining nodes and then reprinting the list.
+	//listFront -> NULL <- listBack
+	myList->removeFirst();
+	cout << endl << "After removing the remaining nodes the list is - " << endl;
+	cout << myList;
+}
+
+void listDelete(List* myList, Node* nodeArray)
+{
+	delete myList;
+	delete [] nodeArray;
+}
+
+void stackTesting()
+{
+	Stack* myStack = new Stack();
+	Node* nodeArray = stackCreate(myStack);
+	cout << "Stack size is: " << myStack->getListSize() << endl << endl;
+
+	stackProcess(myStack);
+
+	//Deleting my allocated nodes and stack.
+	stackDelete(myStack, nodeArray);
+}
+
+Node* stackCreate(Stack* myStack)
+{
+	//Allocating my 4 nodes for testing.
+	Node* nodeArray = new Node[MAXSIZE];
+	nodeArray[0].setNodeName("Andrew");
+	nodeArray[1].setNodeName("Bob");
+	nodeArray[2].setNodeName("Tom");
+	nodeArray[3].setNodeName("Ron");
+
+	//Assigning my 4 nodes in random order.
+	myStack->pushStack(&nodeArray[0]);
+	myStack->pushStack(&nodeArray[1]);
+	myStack->pushStack(&nodeArray[2]);
+	myStack->pushStack(&nodeArray[3]);
+
+	return nodeArray;
+}
+
+void stackProcess(Stack* myStack)
+{
+	//Printing the list after pushing my 4 nodes onto the stack.
+	//listFront -> Ron -> Tom -> Bob -> Andrew <- listBack
+	cout << myStack;
+
+	//Popping the first node and then reprinting the list.
+	//listFront -> Tom -> Bob -> Andrew <- listBack
+	myStack->popStack();
+	cout << endl <<"After popping the first node the list is - " << endl ;
+	cout << myStack;
+
+	//Popping the first node and then reprinting the list.
+	//listFront -> Bob -> Andrew <- listBack
+	myStack->popStack();
+	cout << endl << "After popping the first node the list is - " << endl;
+	cout << myStack;
+
+	//Popping the first node and then reprinting the list.
+	//listFront -> Andrew <- listBack
+	myStack->popStack();
+	cout << endl << "After popping the first node the list is - " << endl;
+	cout << myStack;
+
+	//Popping the remaining nodes and then reprinting the list.
+	//listFront -> NULL <- listBack
+	myStack->popStack();
+	cout << endl << "After popping the remaining nodes the list is - " << endl;
+	cout << myStack;
+}
+
+void stackDelete(Stack* myStack, Node* nodeArray)
+{
+	delete myStack;
+	delete [] nodeArray;
+}
+
+void queueTesting()
+{
+	Queue* myQueue = new Queue();
+	Node* nodeArray = queueCreate(myQueue);
+	cout << "Queue size is: " << myQueue->getListSize() << endl << endl;
+
+	queueProcess(myQueue);
+
+	//Deleting my allocated nodes and queue.
+	queueDelete(myQueue, nodeArray);
+}
+
+Node* queueCreate(Queue* myQueue)
+{
+	//Allocating my 4 nodes for testing.
+	Node* nodeArray = new Node[MAXSIZE];
+	nodeArray[0].setNodeName("Andrew");
+	nodeArray[1].setNodeName("Bob");
+	nodeArray[2].setNodeName("Tom");
+	nodeArray[3].setNodeName("Ron");
+
+	//Assigning my 4 nodes in random order.
+	myQueue->enQueue(&nodeArray[0]);
+	myQueue->enQueue(&nodeArray[1]);
+	myQueue->enQueue(&nodeArray[2]);
+	myQueue->enQueue(&nodeArray[3]);
+
+	return nodeArray;
+}
+
+void queueProcess(Queue* myQueue)
+{
+	//Printing the list after enqueueing my 4 nodes into the queue.
+	//listFront -> Andrew -> Bob -> Tom -> Ron <- listBack
+	cout << myQueue;
+
+	//Dequeueing the first node and then reprinting the list.
+	//listFront -> Bob -> Tom -> Ron <- listBack
+	myQueue->deQueue();
+	cout << endl <<"After dequeueing the first node the list is - " << endl ;
+	cout << myQueue;
+
+	//Dequeueing the first node and then reprinting the list.
+	//listFront -> Tom -> Ron <- listBack
+	myQueue->deQueue();
+	cout << endl << "After dequeueing the first node the list is - " << endl;
+	cout << myQueue;
+
+	//Dequeueing the first node and then reprinting the list.
+	//listFront -> Ron <- listBack
+	myQueue->deQueue();
+	cout << endl << "After dequeueing the first node the list is - " << endl;
+	cout << myQueue;
+
+	//Dequeueing the remaining node and then reprinting the list.
+	//listFront -> NULL <- listBack
+	myQueue->deQueue();
+	cout << endl << "After dequeueing the remaining nodes the list is - " << endl;
+	cout << myQueue;
+}
+
+void queueDelete(Queue* myQueue, Node* nodeArray)
+{
+	delete myQueue;
+	delete [] nodeArray;
+}

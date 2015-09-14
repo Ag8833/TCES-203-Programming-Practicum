@@ -1,0 +1,33 @@
+/*
+ * Node.h
+ *
+ *  Created on: May 18, 2015
+ *      Author: ag8833
+ */
+
+#ifndef NODE_H_
+#define NODE_H_
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Node
+{
+	protected:
+		string nodeName;
+		Node* nodeNext;
+		Node* nodePrev;
+	public:
+		Node();
+		Node(string);
+		string getNodeName();
+		Node* getNodeNext();
+		Node* getNodePrev();
+		void setNodeName(string);
+		void setNodeNext(Node*);
+		void setNodePrev(Node*);
+};
+
+#endif /* NODE_H_ */

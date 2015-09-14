@@ -1,0 +1,23 @@
+/*
+ * Queue.h
+ *
+ *  Created on: May 20, 2015
+ *      Author: ag8833
+ */
+
+#ifndef QUEUE_H_
+#define QUEUE_H_
+
+#include "List.h"
+
+class Queue : public List
+{
+	public:
+		Queue();
+		void enQueue(Node*);
+		void deQueue();
+		void printQueue();
+		friend ostream &operator<<(ostream &, Queue*);
+};
+
+#endif /* QUEUE_H_ */

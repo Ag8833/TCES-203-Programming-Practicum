@@ -1,0 +1,80 @@
+/*
+ * Queue.cpp
+ *
+ *  Created on: May 20, 2015
+ *      Author: ag8833
+ */
+
+#include "Queue.h"
+
+Queue::Queue()
+{
+	listFront = NULL;
+	listBack = NULL;
+	listSize = 0;
+}
+
+void Queue::enQueue(Node* newNode)
+{
+	this->addLast(newNode);
+}
+
+void Queue::deQueue()
+{
+	int test = this->isEmpty();
+
+	if(test == 1)
+	{
+		cout << "The queue is empty!" << endl;
+		return;
+	}
+
+	this->removeFirst();
+}
+
+ostream &operator<<(ostream &s, Queue* myQueue)
+{
+	myQueue->printQueue();
+
+	return s;
+}
+
+void Queue::printQueue()
+{
+	Node* tempNode = this->listFront;
+	int i;
+
+	if (tempNode == NULL)
+	{
+		cout << "The queue is empty" << endl;
+		return;
+	}
+
+	if (tempNode != NULL)
+	{
+		cout << "Front -> " << tempNode->getNodeName();
+
+		if ((this->getListSize()) > 1)
+		{
+			for (i = 1; i < this->getListSize(); i++)
+			{
+				tempNode = tempNode->getNodeNext();
+				if (tempNode->getNodeNext() == NULL)
+				{
+					cout << " -><- " << tempNode->getNodeName() << " <- Back" << endl;
+					break;
+				}
+				else
+				{
+					cout << " -><- " << tempNode->getNodeName();
+				}
+			}
+		}
+		else
+		{
+			cout << " <- Back" << endl;
+		}
+	}
+
+		tempNode = NULL;
+}

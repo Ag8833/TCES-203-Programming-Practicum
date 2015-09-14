@@ -1,0 +1,80 @@
+/*
+ * Stack.cpp
+ *
+ *  Created on: May 20, 2015
+ *      Author: ag8833
+ */
+
+#include "Stack.h"
+
+Stack::Stack()
+{
+	listFront = NULL;
+	listBack = NULL;
+	listSize = 0;
+}
+
+void Stack::pushStack(Node* newNode)
+{
+	this->addFirst(newNode);
+}
+
+void Stack::popStack()
+{
+	int test = this->isEmpty();
+
+	if(test == 1)
+	{
+		cout << "The stack is empty!" << endl;
+		return;
+	}
+
+	this->removeFirst();
+}
+
+ostream &operator<<(ostream &s, Stack* myStack)
+{
+	myStack->printStack();
+
+	return s;
+}
+
+void Stack::printStack()
+{
+	Node* tempNode = this->listFront;
+	int i;
+
+	if (tempNode == NULL)
+	{
+		cout << "The stack is empty" << endl;
+		return;
+	}
+
+	if (tempNode != NULL)
+	{
+		cout << "Top -> " << tempNode->getNodeName();
+
+		if ((this->getListSize()) > 1)
+		{
+			for (i = 1; i < this->getListSize(); i++)
+			{
+				tempNode = tempNode->getNodeNext();
+				if (tempNode->getNodeNext() == NULL)
+				{
+					cout << " -><- " << tempNode->getNodeName() << " <- Bottom" << endl;
+					break;
+				}
+				else
+				{
+					cout << " -><- " << tempNode->getNodeName();
+				}
+			}
+		}
+		else
+		{
+			cout << " <- Bottom" << endl;
+		}
+	}
+
+	tempNode = NULL;
+}
